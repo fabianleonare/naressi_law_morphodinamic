@@ -224,21 +224,28 @@ def plot_scaling_analysis():
     for n in N_values:
         for a in alpha_range:
             entropy = calculate_vn_entropy_qutip(n, a, g)
-            # Extracted as raw float to prevent array text data leaking into the plot canvas
             results[n].append(float(entropy))
 
+    # Completely reset and clean the figure canvas
+    plt.close('all')
     plt.clf()
-    plt.figure(figsize=(8, 5))
+    
+    fig, ax = plt.subplots(figsize=(8, 5))
     for n in N_values:
-        plt.plot(alpha_range, results[n], label=f'N={n}')
-    plt.xlabel(r'$\alpha$ (Scale Parameter)')
-    plt.ylabel('Von Neumann Entropy')
-    plt.title('Naressi Law: Scaling Analysis')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig('naressi_scaling_plot.png', dpi=300)
-    plt.close()
-    print("Plot saved as 'naressi_scaling_plot.png'.")
+        ax.plot(alpha_range, results[n], label=f'N={n}')
+        
+    # --- SANITIZED LABELS (Bypasses mathtext LaTeX parsing entirely) ---
+    ax.set_xlabel('alpha (Scale Parameter)') 
+    ax.set_ylabel('Von Neumann Entropy')
+    ax.set_title('Naressi Law: Scaling Analysis')
+    
+    ax.legend()
+    ax.grid(True)
+    
+    # Save using standard layout adjustments
+    fig.savefig('naressi_scaling_plot.png', dpi=300, bbox_inches='tight')
+    plt.close(fig)
+    print("Plot saved successfully as 'naressi_scaling_plot.png'.")
 
 if __name__ == '__main__':
     print("Naressi Law Framework Initialized successfully.")
