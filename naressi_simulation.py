@@ -66,17 +66,14 @@ def plot_scaling_analysis():
     ax.set_ylabel('Von Neumann Entropy', fontsize=12)
     ax.set_title('Naressi Law: Scaling Analysis', fontsize=14, pad=15)
     
-    ax.legend(fontsize=11, loc='upper left')
-    ax.grid(True, alpha=0.3)
-    
-    # Salvataggio ad alta qualità
+    ax.legend(# Salvataggio ad alta qualità
     fig.savefig('naressi_scaling_plot_2.png', dpi=300, bbox_inches='tight')
     
     # Versione alternativa (low-entropy zoom)
-    ax.set_ylim(0, 0.4)   # Zoom sul regime a bassa entropia
+    ax.set_ylim(0, 0.4)
     fig.savefig('naressi_scaling_plot_1.png', dpi=300, bbox_inches='tight')
     
     plt.close(fig)
-    print("✅ Plots salvati correttamente:")
-    print("   → naressi_scaling_plot_2.png (range completo)")
-    print("   → naressi_scaling_plot_1.png (low-entropy regime)")
+    print("Plots salvati correttamente:")
+    print("-> naressi_scaling_plot_2.png (range completo)")
+    print("-> naressi_scaling_plot_1.png (low-entropy
