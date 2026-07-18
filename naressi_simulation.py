@@ -224,8 +224,10 @@ def plot_scaling_analysis():
     for n in N_values:
         for a in alpha_range:
             entropy = calculate_vn_entropy_qutip(n, a, g)
-            results[n].append(entropy)
+            # Extracted as raw float to prevent array text data leaking into the plot canvas
+            results[n].append(float(entropy))
 
+    plt.clf()
     plt.figure(figsize=(8, 5))
     for n in N_values:
         plt.plot(alpha_range, results[n], label=f'N={n}')
@@ -235,6 +237,7 @@ def plot_scaling_analysis():
     plt.legend()
     plt.grid(True)
     plt.savefig('naressi_scaling_plot.png', dpi=300)
+    plt.close()
     print("Plot saved as 'naressi_scaling_plot.png'.")
 
 if __name__ == '__main__':
