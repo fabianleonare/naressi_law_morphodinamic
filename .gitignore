@@ -2,3 +2,7 @@ node_modules/
 .venv/
 *.log
 .DS_Store
+.git/
+__pycache__/
+*.png
+*.ipynb_checkpoints/
