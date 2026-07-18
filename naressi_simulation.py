@@ -11,7 +11,9 @@ import numpy as np
 import scipy.sparse as sp
 from scipy.sparse.linalg import eigsh
 import matplotlib.pyplot as plt
-
+# Forza matplotlib a non usare una GUI (essenziale per Docker/Code Ocean)
+import matplotlib
+matplotlib.use('Agg')
 # Try importing QuTiP and TeNPy for completeness, but handle exceptions if not installed
 try:
     import qutip as qt
@@ -63,14 +65,18 @@ def build_hamiltonian_qutip(N, alpha, g, phi=(1 + np.sqrt(5)) / 2):
 def calculate_vn_entropy_qutip(N, alpha, g, phi=(1 + np.sqrt(5)) / 2):
     if qt is None:
         raise ImportError("QuTiP is required for this function.")
-    H = build_hamiltonian_qutip(N, alpha, g, phi)
-    evals, evecs = qt.eigenstates(H, eigvals=1)
-    gs = evecs[0]
     
-    # Reduce density matrix to half chain
+    # 1. Calcoliamo l'autovettore fondamentale usando SciPy Sparse (veloce e robusto)
+    H_sparse = build_hamiltonian_sparse(N, alpha, g, phi)
+    _, evec_sparse = eigsh(H_sparse, k=1, which='SA')
+    
+    # 2. Convertiamo l'autovettore in un Qobj di QuTiP (Ket dello stato fondamentale)
+    dims = [[2]*N, [1]*N]
+    gs = qt.Qobj(evec_sparse[:, 0], dims=dims)
+    
+    # 3. Calcolo dell'entropia di Von Neumann a metà catena
     rho_red = gs.ptrace(range(N // 2))
     return qt.entropy_vn(rho_red)
-
 # =============================================================================
 # 2. SPARSE SCIPY IMPLEMENTATION (Optimal for 16 < N <= 24)
 # =============================================================================
