@@ -10,9 +10,16 @@ Description: Comprehensive simulation suite for analyzing scaling properties and
 import numpy as np
 import scipy.sparse as sp
 from scipy.sparse.linalg import eigsh
-import matplotlib.pyplot as plt
-# Forza matplotlib a non usare una GUI (essenziale per Docker/Code Ocean)
 import matplotlib
+import matplotlib.pyplot as plt
+
+# --- FIX PER IL RASTER OVERFLOW SU BINDER ---
+matplotlib.rcParams['text.usetex'] = False  # Disabilita il compilatore esterno se attivo
+matplotlib.rcParams['mathtext.fontset'] = 'cm'  # Usa il font standard per la matematica (Computer Modern)
+matplotlib.rcParams['figure.max_open_warning'] = 0  # Evita warning di memoria
+# Se hai stringhe con math eccessivamente grandi nei titoli, riduci la dimensione del font:
+matplotlib.rcParams['font.size'] = 10 
+# ---------------------------------------------
 matplotlib.use('Agg')
 # Try importing QuTiP and TeNPy for completeness, but handle exceptions if not installed
 try:
