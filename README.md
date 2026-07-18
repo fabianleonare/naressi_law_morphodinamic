@@ -19,3 +19,18 @@ Rather than treating microscopic and macroscopic fields as decoupled systems, th
 Ensure you have Python 3.8+ installed, then clone the repository and install the required dependencies:
 ```bash
 pip install -r requirements.txt
+## Getting Started
+
+### Prerequisites
+Il framework è ottimizzato per ambienti isolati tramite Anaconda/Conda. Assicurati di avere Conda installato sul tuo sistema host.
+
+### Installazione e Uso Locale
+
+1. Clona la repository:
+   ```bash
+   git clone https://github.com/fabianleonare/naressi_law_morphodinamic.git
+   cd naressi_law_morphodinamic
+conda env create -f environment.yml
+conda activate quantum
+python naressi_simulation.py
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/fabianleonare/naressi_law_morphodinamic/main)
